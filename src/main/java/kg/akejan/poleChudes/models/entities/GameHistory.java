@@ -1,10 +1,11 @@
 package kg.akejan.poleChudes.models.entities;
 
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+@Data
 @Entity
 @Table(name = "game_history")
 public class GameHistory {

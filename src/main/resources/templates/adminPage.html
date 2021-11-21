@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminPage</title>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 
 <body>
-<h1>Hello Admin</h1>
+    <div class="adminBar">
+        <div class="adminName">
+            <p class="pName">
+                <a href="/index">Выйти</a>
+            </p>
+        </div>
+        <div class="adminName">
+            <p th:text="${adminName.getName()}" class="pName"></p>
+        </div>
+        <div class="adminLogo">
+            <h2>AdministratorPage</h2>
+        </div>
+    </div>
 </body>
 
 </html>

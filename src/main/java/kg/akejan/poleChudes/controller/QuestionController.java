@@ -1,16 +1,18 @@
 package kg.akejan.poleChudes.controller;
-
+import kg.akejan.poleChudes.models.dtos.QuestionsDto;
 import kg.akejan.poleChudes.services.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/question")
 public class QuestionController {
 
-    private QuestionService questionService;
+    private final QuestionService questionService;
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
@@ -22,9 +24,8 @@ public class QuestionController {
     }
 
     @GetMapping("/getAllQuestions")
-    public String getAllQuestion(Model model) {
-        model.addAttribute("allQuestions", questionService.findAll());
-        return "question";
+    public List<QuestionsDto> getAll() {
+        return questionService.findAll();
     }
 
 

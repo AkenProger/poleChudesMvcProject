@@ -1,3 +1,46 @@
 body {
-    background-color: #c5dfdf;
+    background-color: #c7dfdf;
+    margin: 0;
+    padding: 0;
+}
+h1, h2 ,h3 {
+    margin: 0;
+    padding: 0;
+}
+p {
+    margin: 0;
+    padding: 0;
+}
+.adminBar {
+     display: block;
+     position: relative;
+     width: 100%;
+     height: 65px;
+     background-color: rgb(41, 143, 238);
+}
+
+.adminName {
+    display: block;
+    position: relative;
+    width: auto;
+    height: auto;
+    background-color: rgb(86, 218, 241);
+    float: right;
+    margin: 20px;
+    font-size: 20px;
+    font-family:monospace;
+    border-radius: 8px;
+}
+
+.pName {
+    padding: 3px;
+}
+
+.adminLogo {
+    display: block;
+    position:absolute;
+    margin-left: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+
 }

@@ -25,6 +25,11 @@
                     <label for="exampleInputPassword1">Password:</label>
                     <input type="password" th:field="*{password}" class="form-control" id="exampleInputPassword1"
                            placeholder="Password">
+
+                    <div style="color: red">
+                        <h2 th:text="${err}"></h2>
+                    </div>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary">Enter</button>

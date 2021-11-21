@@ -6,15 +6,13 @@ import kg.akejan.poleChudes.mappers.UserMapper;
 import kg.akejan.poleChudes.models.dtos.UsersDto;
 import kg.akejan.poleChudes.services.UserService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserMapper userMapper = UserMapper.USER_MAPPER;
-    private UsersRepository usersRepository;
+    private final UserMapper userMapper = UserMapper.USER_MAPPER;
+    private final UsersRepository usersRepository;
 
     public UserServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
@@ -49,16 +47,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkingTheUser(UsersDto usersDto) {
         UsersDto usersDto1 = userMapper.toDto(usersRepository.findUserByLogin(usersDto.getLogin()));
-        System.out.println("NAME"+usersDto1.getName());
         if (usersDto1 != null) {
             if (usersDto1.getPassword().equals(usersDto.getPassword()) && usersDto1.getRoleType().equals(RoleType.ADMIN)) {
                 return "ADMIN";
-            }else if (usersDto1.getRoleType().equals(RoleType.USER)){
+            } else if (usersDto1.getRoleType().equals(RoleType.USER)) {
                 return "USER";
             }
         }else {
-            return new Exception("Пользовател не найден!").getMessage();
+            return "NTF";
         }
         return null;
+    }
+
+    @Override
+    public boolean checkUserTheUser(UsersDto usersDto) {
+        return false;
+    }
+
+    @Override
+    public UsersDto findUserByLogin(String login) {
+        return userMapper.toDto(usersRepository.findUserByLogin(login));
     }
 }

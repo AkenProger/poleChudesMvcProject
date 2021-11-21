@@ -7,11 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdminController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public AdminController(UserService userService) {
         this.userService = userService;
@@ -25,8 +26,29 @@ public class AdminController {
 
     @PostMapping("/author")
     public String authorization(@ModelAttribute("admin") UsersDto usersDto, Model model) {
-        System.out.println(usersDto.getLogin());
-         userService.checkingTheUser(usersDto);
-            return "adminPage";
+        if (!userService.checkingTheUser(usersDto).equals("NTF")) {
+            if (userService.checkingTheUser(usersDto).equals("ADMIN")) {
+                return adminPage(model, usersDto);
+            } else if (userService.checkingTheUser(usersDto).equals("USER")) {
+                return userPage(model, usersDto);
+            }
+        }else {
+            model.addAttribute("err", "Пользовател не найден");
+            return signIn(model);
+        }
+        return "redirect:/index";
     }
+
+    @GetMapping("/adminPage")
+    public String adminPage(Model model, UsersDto usersDto) {
+        model.addAttribute("adminName", userService.findUserByLogin(usersDto.getLogin()));
+        return "adminPage";
+    }
+
+    @GetMapping("/userPage")
+    public String userPage(Model model, UsersDto usersDto) {
+        model.addAttribute("userName", userService.findUserByLogin(usersDto.getLogin()));
+        return "userPage";
+    }
+
 }

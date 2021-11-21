@@ -4,13 +4,16 @@ import kg.akejan.poleChudes.dao.QuestionRepository;
 import kg.akejan.poleChudes.mappers.QuestionMapper;
 import kg.akejan.poleChudes.models.dtos.QuestionsDto;
 import kg.akejan.poleChudes.services.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    private QuestionMapper questionMapper = QuestionMapper.QUESTION_MAPPER;
-    private QuestionRepository questionRepository;
+
+    private final QuestionMapper questionMapper = QuestionMapper.QUESTION_MAPPER;
+
+    private final QuestionRepository questionRepository;
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
