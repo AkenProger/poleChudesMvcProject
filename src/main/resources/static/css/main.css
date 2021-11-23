@@ -135,10 +135,20 @@ p {
     margin-left: 30px;
     font-size: 30px;
     margin-top: 15px;
+    border-radius: 7px;
 }
 
 .btn {
     font-size: 30px;
+    background: #76f2ff;
+    border-radius: 7px;
+
+}
+
+.btn:hover {
+    font-size: 32px;
+    background: #76f2ff;
+    transition: 2s;
 }
 
 .question {

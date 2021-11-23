@@ -52,10 +52,12 @@
         <div class="secretSymbols" id="secrets"></div>
         <h2 th:text="${randomQuestion.getQuestion()}" class="question"></h2>
         <div id="ch"></div>
+        <h2 id="money"></h2>
         <script th:inline="javascript">
             var answers = /*[[${randomQuestion.getAnswer()}]]*/;
             var secredString = "";
             var blockNowString = "";
+            var ch = 0;
             window.addEventListener("load", function () {
                 blockNowString = document.getElementById("secrets");
                 for (var i = 0; i < answers.length; i++)
@@ -66,23 +68,30 @@
             function answerFinder() {
                 var userAnswer = document.getElementById("userAnswer").value;
                 document.getElementById("userAnswer").value = "";
+                if (userAnswer.length > 1)
+                    if (userAnswer == answers)
+                        blockNowString.innerHTML = answers;
+                document.getElementById("secrets").style.fontSize = '60px';
+                document.getElementById("secrets").style.color = '#268715';
+                document.getElementById("secrets").style.transition = '3s';
+
+
                 if (userAnswer.length > 1 || userAnswer == "" || userAnswer == " ")
                     return alert("Вы должны ввести 1 символ!");
-                    secredString = secredString.split("");
-                    ch++;
-                    for (var i = 0; i < answers.length; i++)
-                        if (answers[i] == userAnswer) secredString[i] = userAnswer;
-                    secredString = secredString.join("");
-                    blockNowString.innerHTML = secredString;
-                    if (secredString == answers)
-                        document.getElementById("ch").innerHTML = "колличество попыток = " + ch;
-
-
-
+                secredString = secredString.split("");
+                ch++;
+                for (var i = 0; i < answers.length; i++)
+                    if (answers[i] == userAnswer)
+                        secredString[i] = userAnswer;
+                secredString = secredString.join("");
+                blockNowString.innerHTML = secredString;
+                if (secredString == answers) {
+                    document.getElementById("ch").innerHTML = "колличество попыток = " + ch;
+                    var rand = Math.floor(Math.random() * (100000 - 25000));
+                    document.getElementById("money").innerHTML = "Вы выиграли:" + rand + " $.";
+                }
 
             }
-
-
 
         </script>
 
