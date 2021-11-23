@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
+    private final Random random = new Random();
     private final QuestionMapper questionMapper = QuestionMapper.QUESTION_MAPPER;
-
     private final QuestionRepository questionRepository;
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
@@ -43,4 +45,17 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionsDto deactivate(Long aLong) {
         return null;
     }
+
+    @Override
+    public List<QuestionsDto> getAllActiveQuestion() {
+        return questionMapper.toDtoList(questionRepository.findAllActiveQuestions());
+    }
+
+    @Override
+    public QuestionsDto getRandomQuestion() {
+        List<QuestionsDto> questionDtoList = questionMapper.toDtoList(questionRepository.findAllActiveQuestions());
+        QuestionsDto questions = questionDtoList.get(random.nextInt(questionDtoList.size()));
+        return questions;
+    }
+
 }

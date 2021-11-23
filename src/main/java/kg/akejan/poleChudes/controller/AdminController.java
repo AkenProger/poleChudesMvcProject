@@ -1,21 +1,22 @@
 package kg.akejan.poleChudes.controller;
-
 import kg.akejan.poleChudes.models.dtos.UsersDto;
+import kg.akejan.poleChudes.services.QuestionService;
 import kg.akejan.poleChudes.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @Controller
 public class AdminController {
 
     private final UserService userService;
-
-    public AdminController(UserService userService) {
+    private final QuestionService questionService;
+    public AdminController(UserService userService, QuestionService questionService) {
         this.userService = userService;
+        this.questionService = questionService;
     }
 
     @GetMapping("/index")
@@ -48,6 +49,7 @@ public class AdminController {
     @GetMapping("/userPage")
     public String userPage(Model model, UsersDto usersDto) {
         model.addAttribute("userName", userService.findUserByLogin(usersDto.getLogin()));
+        model.addAttribute("randomQuestion", questionService.getRandomQuestion());
         return "userPage";
     }
 

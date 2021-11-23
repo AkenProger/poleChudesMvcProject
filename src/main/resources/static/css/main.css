@@ -11,6 +11,7 @@ p {
     margin: 0;
     padding: 0;
 }
+/*  Styles for adminPage START*/
 .adminBar {
      display: block;
      position: relative;
@@ -43,4 +44,104 @@ p {
     margin-top: 20px;
     color: #ffffff;
 
+}
+
+/*  Styles for adminPage END*/
+p {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/*  Styles for userPage START*/
+.userBar {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 65px;
+    background-color: rgb(41, 143, 238);
+}
+
+.userName {
+   display: block;
+   position: relative;
+   width: auto;
+   height: auto;
+   background-color: rgb(86, 218, 241);
+   float: right;
+   margin: 20px;
+   font-size: 20px;
+   font-family:monospace;
+   border-radius: 8px;
+}
+
+.pName {
+   padding: 3px;
+}
+
+.userLogo {
+   display: block;
+   position:absolute;
+   margin-left: 20px;
+   margin-top: 20px;
+   color: #ffffff;
+
+}
+
+.showUser {
+    display: block;
+    position: absolute;
+    width: 200px;
+    height:150px;
+    right: 55px;
+    margin-top: 65px;
+    border-radius: 10px;
+    display: none;
+    background-color: rgb(244, 248, 250);
+    
+}
+
+.itemUser {
+    margin: 5px;
+}
+.close {
+    position: absolute;
+    right: 10px;
+    background: aliceblue;
+    margin: 5px;
+}
+
+.boxGame {
+    display: block;
+    position: relative;
+    width: 95%;
+    height: 450px;
+    margin: 35px;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+/*  Styles for adminPage END*/
+
+.boxGameTitle {
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.secretSymbols {
+    font-size: 50px;
+    margin-left: 25px;
+}
+
+.inp {
+    margin-left: 30px;
+    font-size: 30px;
+    margin-top: 15px;
+}
+
+.btn {
+    font-size: 30px;
+}
+
+.question {
+    margin-left: 30px;
+    font-size: 35px;
 }
