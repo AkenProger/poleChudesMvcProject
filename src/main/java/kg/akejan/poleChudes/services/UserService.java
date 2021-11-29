@@ -9,5 +9,6 @@ public interface UserService extends BaseCrudService<UsersDto, Long>{
 
       UsersDto findUserByLogin(String login);
 
+      Long findUserIdByLogin(String login);
 
 }

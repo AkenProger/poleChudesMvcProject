@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (usersDto1 != null) {
             if (usersDto1.getPassword().equals(usersDto.getPassword()) && usersDto1.getRoleType().equals(RoleType.ADMIN)) {
                 return "ADMIN";
-            } else if (usersDto1.getRoleType().equals(RoleType.USER)) {
+            } else if (usersDto1.getPassword().equals(usersDto.getPassword()) && usersDto1.getRoleType().equals(RoleType.USER)) {
                 return "USER";
             }
         }else {
@@ -67,5 +67,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UsersDto findUserByLogin(String login) {
         return userMapper.toDto(usersRepository.findUserByLogin(login));
+    }
+
+    @Override
+    public Long findUserIdByLogin(String login) {
+        return usersRepository.findUserIdByLogin(login);
     }
 }

@@ -1,5 +1,6 @@
 package kg.akejan.poleChudes.controller;
 import kg.akejan.poleChudes.models.dtos.UsersDto;
+import kg.akejan.poleChudes.services.GameHistoryService;
 import kg.akejan.poleChudes.services.QuestionService;
 import kg.akejan.poleChudes.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,12 @@ public class AdminController {
 
     private final UserService userService;
     private final QuestionService questionService;
-    public AdminController(UserService userService, QuestionService questionService) {
+    private final GameHistoryService gameHistoryService;
+    public AdminController(UserService userService, QuestionService questionService,
+                           GameHistoryService gameHistoryService) {
         this.userService = userService;
         this.questionService = questionService;
+        this.gameHistoryService = gameHistoryService;
     }
 
     @GetMapping("/index")
@@ -50,6 +54,8 @@ public class AdminController {
     public String userPage(Model model, UsersDto usersDto) {
         model.addAttribute("userName", userService.findUserByLogin(usersDto.getLogin()));
         model.addAttribute("randomQuestion", questionService.getRandomQuestion());
+        model.addAttribute("gameHistory",
+                gameHistoryService.findGameHistoryByUserId(userService.findUserIdByLogin(usersDto.getLogin())));
         return "userPage";
     }
 

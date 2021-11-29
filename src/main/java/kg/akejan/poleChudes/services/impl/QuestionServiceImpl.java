@@ -23,8 +23,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionsDto save(QuestionsDto questionsDto) {
+
         return questionMapper.toDto(questionMapper.toEntity(questionsDto));
     }
+
+
 
     @Override
     public QuestionsDto update(QuestionsDto questionsDto) {

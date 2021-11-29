@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UserPage</title>
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 
@@ -16,7 +17,7 @@
     <div class="userBar">
         <div class="userName">
             <p class="pName">
-                <a href="/index">Выйти</a>
+                <a href="/index">Exit</a>
             </p>
         </div>
         <div class="userName">
@@ -51,13 +52,18 @@
         <hr>
         <div class="secretSymbols" id="secrets"></div>
         <h2 th:text="${randomQuestion.getQuestion()}" class="question"></h2>
-        <div id="ch"></div>
-        <h2 id="money"></h2>
+        <div id="ch" class="attempt"></div>
+        <h2 id="money" class="money"></h2>
+
         <script th:inline="javascript">
             var answers = /*[[${randomQuestion.getAnswer()}]]*/;
+            var userId = /*[[${userName.getId()}]]*/;
+            var questionId = /*[[${randomQuestion.getId()}]]*/;
+
             var secredString = "";
             var blockNowString = "";
             var ch = 0;
+            var rand = 0;
             window.addEventListener("load", function () {
                 blockNowString = document.getElementById("secrets");
                 for (var i = 0; i < answers.length; i++)
@@ -68,35 +74,107 @@
             function answerFinder() {
                 var userAnswer = document.getElementById("userAnswer").value;
                 document.getElementById("userAnswer").value = "";
-                if (userAnswer.length > 1)
-                    if (userAnswer == answers)
-                        blockNowString.innerHTML = answers;
-                document.getElementById("secrets").style.fontSize = '60px';
-                document.getElementById("secrets").style.color = '#268715';
-                document.getElementById("secrets").style.transition = '3s';
 
+                if (userAnswer == "" || userAnswer == " ")
+                    return alert("You must enter 1 character or whole word!");
 
-                if (userAnswer.length > 1 || userAnswer == "" || userAnswer == " ")
-                    return alert("Вы должны ввести 1 символ!");
-                secredString = secredString.split("");
-                ch++;
-                for (var i = 0; i < answers.length; i++)
-                    if (answers[i] == userAnswer)
-                        secredString[i] = userAnswer;
-                secredString = secredString.join("");
-                blockNowString.innerHTML = secredString;
-                if (secredString == answers) {
-                    document.getElementById("ch").innerHTML = "колличество попыток = " + ch;
-                    var rand = Math.floor(Math.random() * (100000 - 25000));
-                    document.getElementById("money").innerHTML = "Вы выиграли:" + rand + " $.";
+                if (userAnswer.length == 1) {
+                    secredString = secredString.split("");
+                    ch++;
+                    for (var i = 0; i < answers.length; i++)
+                        if (answers[i] == userAnswer)
+                            secredString[i] = userAnswer;
+                    secredString = secredString.join("");
+                    blockNowString.innerHTML = secredString;
+                    if (secredString == answers) {
+                        document.getElementById("ch").innerHTML = "number of attempts = " + ch;
+                        rand = Math.floor(Math.random() * (100000 - 25000));
+                        document.getElementById("money").innerHTML = "Вы выиграли:" + rand + " $.";
+                        document.getElementById("secrets").style.fontSize = '60px';
+                        document.getElementById("secrets").style.color = '#268715';
+                        document.getElementById("secrets").style.transition = '3s';
+                        document.getElementById("playmore").style.display = 'inline';
+
+                        var historyData = {
+                            winningAmount: rand,
+                            questions_id: questionId,
+                            user_id: userId,
+                            attempts: ch
+                        };
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json",
+                            url: "http://localhost:8080/history/saveHistory",
+                            data: JSON.stringify(historyData),
+                            dataType: 'json',
+                            success: function () {
+                                alert("OK!")
+                            },
+                            error: function (e) {
+                                alert("Error!")
+                                console.log("ERROR: ", e);
+                            }
+
+                        });
+                        return alert("You won!")
+                    }
+                }
+
+                if (userAnswer == answers) {
+                    ch++;
+                    blockNowString.innerHTML = answers;
+                    rand = Math.floor(Math.random() * (100000 - 25000));
+                    document.getElementById("money").innerHTML = "You won:" + rand + " $.";
+                    document.getElementById("ch").innerHTML = "number of attempts = " + ch;
+                    document.getElementById("secrets").style.fontSize = '60px';
+                    document.getElementById("secrets").style.color = '#268715';
+                    document.getElementById("secrets").style.transition = '3s';
+                    document.getElementById("playmore").style.display = 'inline';
+                    return alert("You won!")
                 }
 
             }
 
+
+
         </script>
+
 
         <input type="text" placeholder="Enter answer or symbol" class="inp" id="userAnswer">
         <input type="button" value="Enter" class="btn" onclick="answerFinder()">
+        <input type="button" value="Play more" class="btn2" onclick="refresh()" style="display: none;" id="playmore">
+
+    </div>
+
+    <div class="boxGame2">
+        <h3 class="boxGameTitle2">My game history:</h3>
+        <hr>
+
+
+        <table border="1" class="table table-bordered" style="width: 100%;">
+            <thead class="table-dark">
+                <tr>
+                    <th>Попытки</th>
+                    <th>Код вопроса:</th>
+                    <th>Сумма выигрыша:</th>
+                    <th>Дата игры:</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="quest : ${gameHistory}">
+
+                    <td th:text="${quest.getAttempts()}"></td>
+                    <td th:text="${quest.getQuestions_id()}"></td>
+                    <td th:text="${quest.getWinningAmount()}"></td>
+                    <td th:text="${quest.getGame_date()}"></td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+
 
     </div>
 

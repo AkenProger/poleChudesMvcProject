@@ -145,6 +145,25 @@ p {
 
 }
 
+.btn2 {
+    font-size: 40px;
+    background: #2e53f7;
+    border-radius: 12px;
+
+}
+
+
+.btn3 {
+    position: absolute;
+    font-size: 30px;
+    background: #61fcfc;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 237px;
+
+}
+
+
 .btn:hover {
     font-size: 32px;
     background: #76f2ff;
@@ -155,3 +174,35 @@ p {
     margin-left: 30px;
     font-size: 35px;
 }
+
+.money {
+    margin-left: 31px;
+    font-size: 50px;
+    color: crimson;
+}
+
+.attempt {
+    margin-left: 30px;
+    font-size: 25px;
+    color: darkblue;
+}
+
+/* game histrory */
+
+.boxGame2 {
+    display: block;
+    position: relative;
+    width: 95%;
+    height: auto;
+    margin: 35px;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+/*  Styles for adminPage END*/
+
+.boxGameTitle2 {
+    text-align: center;
+    font-size: 30px;
+
+}
+

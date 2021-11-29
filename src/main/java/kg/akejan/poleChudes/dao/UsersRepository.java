@@ -12,4 +12,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query(value = "select * from users u where u.login = ?1", nativeQuery = true)
     Users findUserByLogin(String login);
 
+    @Query(value = "select * from users u where u.login = ?1", nativeQuery = true)
+    Long findUserIdByLogin(String login);
+
 }

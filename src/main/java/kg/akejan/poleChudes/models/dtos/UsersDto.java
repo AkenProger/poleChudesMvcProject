@@ -1,5 +1,6 @@
 package kg.akejan.poleChudes.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.akejan.poleChudes.enums.RoleType;
 import lombok.Data;
 

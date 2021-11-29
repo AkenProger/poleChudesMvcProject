@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -17,6 +19,11 @@ public class UserController {
     public UserController(UserService userService, QuestionService questionService) {
         this.userService = userService;
         this.questionService = questionService;
+    }
+
+    @GetMapping("/get")
+    public String getName() {
+        return "Hello, I am from Java Spring!";
     }
 
 
